@@ -52,7 +52,7 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
         self.addGestureRecognizer(swipe)
         
     }
-
+    
     func handleSwipe(recognizer:UIPanGestureRecognizer){
         
         if(scrollEnabled){
@@ -64,7 +64,7 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
             if(recognizer.state == UIGestureRecognizerState.Ended || recognizer.state == UIGestureRecognizerState.Failed || recognizer.state == UIGestureRecognizerState.Cancelled)
             {
                 if(currentView?.frame.origin.x < ((width/2) * -1)){
-                    if(currentItemIndex < dataSource?.numberOfItems()){
+                    if(currentItemIndex < dataSource!.numberOfItems()-1){
                         currentItemIndex++
                         delegate?.swipeableTableViewsCurrentItemDidChange(self)
                     }
@@ -74,7 +74,7 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
                         delegate?.swipeableTableViewsCurrentItemDidChange(self)
                     }
                 }
-                loadUnloadViews()
+                loadUnloadViews(true)
             }else{
                 let point:CGPoint = recognizer.locationInView(self)
                 
@@ -127,16 +127,16 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
         return view
     }
     
-    func loadUnloadViews(){
+    func loadUnloadViews(animated:Bool){
         
         let visibleIndexes:NSMutableArray = NSMutableArray()
         if(currentItemIndex == 0){
             visibleIndexes.addObject(0)
             visibleIndexes.addObject(1)
-        } else if (currentItemIndex >= dataSource?.numberOfItems()){
+        } else if (currentItemIndex >= (dataSource!.numberOfItems() - 1)){
             visibleIndexes.addObject(currentItemIndex-1)
             visibleIndexes.addObject(currentItemIndex)
-        }else if (currentItemIndex < dataSource?.numberOfItems()){
+        }else if (currentItemIndex < (dataSource!.numberOfItems() - 1)){
             visibleIndexes.addObject(currentItemIndex-1)
             visibleIndexes.addObject(currentItemIndex)
             visibleIndexes.addObject(currentItemIndex+1)
@@ -160,7 +160,7 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
             }
         }
         
-        updateLayout()
+        updateLayout(animated)
         
     }
     
@@ -175,11 +175,11 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
         
         currentItemIndex = 0
         
-        loadUnloadViews()
-
+        loadUnloadViews(false)
+        
     }
     
-    func updateLayout(){
+    func updateLayout(animated:Bool){
         let currentView = itemViewForIndex(currentItemIndex)
         let nextView = itemViewForIndex(currentItemIndex+1)
         let prevView = itemViewForIndex(currentItemIndex-1)
@@ -190,20 +190,31 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
         
         self.bringSubviewToFront(currentView!)
         
-        UIView.animateWithDuration(0.5,
-            delay: 0.0,
-            options: [.CurveEaseInOut, .AllowUserInteraction],
-            animations: {
-                currentView?.frame.origin.x = 0
-                nextView?.frame.origin.x = self.width
-                prevView?.frame.origin.x = -self.width
-            },
-            completion: { finished in
-                
-            }
-        )
+        if(animated){
+            UIView.animateWithDuration(0.5,
+                delay: 0.0,
+                options: [.CurveEaseInOut, .AllowUserInteraction],
+                animations: {
+                    currentView?.frame.origin.x = 0
+                    nextView?.frame.origin.x = self.width
+                    prevView?.frame.origin.x = -self.width
+                },
+                completion: { finished in
+                    
+                }
+            )
+        } else {
+            currentView?.frame.origin.x = 0
+            nextView?.frame.origin.x = self.width
+            prevView?.frame.origin.x = -self.width
+        }
     }
     
+    func goToIndex(index:Int, animated:Bool){
+        if(index >= 0 && index < dataSource?.numberOfItems()){
+            currentItemIndex = index
+            loadUnloadViews(animated)
+        }
+    }
     
-
 }
