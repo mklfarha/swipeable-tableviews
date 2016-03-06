@@ -22,7 +22,6 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
     
     var dataSource:SwipeableTableViewsDataSource?
     var delegate:SwipeableTableViewsDelegate?
-    var numberOfItems:Int = 0
     var currentItemIndex:Int = 0
     var scrollEnabled:Bool = true
     let itemViewPool:NSMutableSet = NSMutableSet()
@@ -55,35 +54,40 @@ class SwipeableTableViews: UIView,UIGestureRecognizerDelegate {
     }
 
     func handleSwipe(recognizer:UIPanGestureRecognizer){
-        let currentView = itemViewForIndex(currentItemIndex)
-        let nextView = itemViewForIndex(currentItemIndex+1)
-        let prevView = itemViewForIndex(currentItemIndex-1)
         
-        
-        if(recognizer.state == UIGestureRecognizerState.Ended || recognizer.state == UIGestureRecognizerState.Failed || recognizer.state == UIGestureRecognizerState.Cancelled)
-        {
-            if(currentView?.frame.origin.x < ((width/2) * -1)){
-                if(currentItemIndex < dataSource?.numberOfItems()){
-                    currentItemIndex++
-                }
-            }else if(currentView?.frame.origin.x > ((width/2))){
-                if(currentItemIndex > 0){
-                    currentItemIndex--
-                }
-            }
-            loadUnloadViews()
-        }else{
-            let point:CGPoint = recognizer.locationInView(self)
+        if(scrollEnabled){
+            let currentView = itemViewForIndex(currentItemIndex)
+            let nextView = itemViewForIndex(currentItemIndex+1)
+            let prevView = itemViewForIndex(currentItemIndex-1)
             
-            let velocity:CGPoint = recognizer.velocityInView(self)
-            if(velocity.x > 0){ // right
-                currentView?.frame.origin.x = point.x
-                prevView?.frame.origin.x = -width+point.x
-                nextView?.frame.origin.x = width+point.x
-            } else { // left
-                currentView?.frame.origin.x = point.x-width
-                nextView?.frame.origin.x = point.x
-                prevView?.frame.origin.x = -width-point.x
+            
+            if(recognizer.state == UIGestureRecognizerState.Ended || recognizer.state == UIGestureRecognizerState.Failed || recognizer.state == UIGestureRecognizerState.Cancelled)
+            {
+                if(currentView?.frame.origin.x < ((width/2) * -1)){
+                    if(currentItemIndex < dataSource?.numberOfItems()){
+                        currentItemIndex++
+                        delegate?.swipeableTableViewsCurrentItemDidChange(self)
+                    }
+                }else if(currentView?.frame.origin.x > ((width/2))){
+                    if(currentItemIndex > 0){
+                        currentItemIndex--
+                        delegate?.swipeableTableViewsCurrentItemDidChange(self)
+                    }
+                }
+                loadUnloadViews()
+            }else{
+                let point:CGPoint = recognizer.locationInView(self)
+                
+                let velocity:CGPoint = recognizer.velocityInView(self)
+                if(velocity.x > 0){ // right
+                    currentView?.frame.origin.x = point.x
+                    prevView?.frame.origin.x = -width+point.x
+                    nextView?.frame.origin.x = width+point.x
+                } else { // left
+                    currentView?.frame.origin.x = point.x-width
+                    nextView?.frame.origin.x = point.x
+                    prevView?.frame.origin.x = -width-point.x
+                }
             }
         }
     }
