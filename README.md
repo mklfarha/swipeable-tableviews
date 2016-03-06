@@ -1,6 +1,6 @@
 # SwipeableTableviews
 
-Swipe Between Tableviews using an UIPanGestureRecognizer (Swift 2.0)
+Swipe Between Tableviews using an UIPanGestureRecognizer (iOS - Swift 2.0)
 
 This was made to avoid scrolling problems with UIScrollView.
 
