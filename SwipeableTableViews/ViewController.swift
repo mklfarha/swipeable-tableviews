@@ -8,11 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SwipeableTableViewsDataSource, SwipeableTableViewsDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.view.backgroundColor = UIColor.lightGrayColor()
+        
+        let swipe:SwipeableTableViews = SwipeableTableViews()
+        swipe.dataSource = self
+        swipe.delegate = self
+        self.view.addSubview(swipe)
+        
+        swipe.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +28,21 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func numberOfItems()->Int{
+        return 4;
+    }
+    
+    func viewForItemAtIndex(swipeableTableviews:SwipeableTableViews, index:Int, var reusingView view: UIView?)->UIView?{
+        if(view == nil){
+            view = SimpleTableView()
+        }        
+        return view
+    }
+    
+    func swipeableTableViewsCurrentItemDidChange(swipeableTableviews:SwipeableTableViews){
+        
+    }
+    
 
 }
 

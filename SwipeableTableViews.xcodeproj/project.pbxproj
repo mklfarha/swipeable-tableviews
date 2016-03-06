@@ -14,6 +14,8 @@
 		003696BB1C8B7BA300465591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 003696B91C8B7BA300465591 /* LaunchScreen.storyboard */; };
 		003696C61C8B7BA300465591 /* SwipeableTableViewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003696C51C8B7BA300465591 /* SwipeableTableViewsTests.swift */; };
 		003696D11C8B7BA300465591 /* SwipeableTableViewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003696D01C8B7BA300465591 /* SwipeableTableViewsUITests.swift */; };
+		003696DF1C8B7BFD00465591 /* SwipeableTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003696DE1C8B7BFD00465591 /* SwipeableTableViews.swift */; };
+		003696E11C8B8B8F00465591 /* SimpleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003696E01C8B8B8F00465591 /* SimpleTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		003696CC1C8B7BA300465591 /* SwipeableTableViewsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwipeableTableViewsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		003696D01C8B7BA300465591 /* SwipeableTableViewsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableTableViewsUITests.swift; sourceTree = "<group>"; };
 		003696D21C8B7BA300465591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		003696DE1C8B7BFD00465591 /* SwipeableTableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableTableViews.swift; sourceTree = "<group>"; };
+		003696E01C8B8B8F00465591 /* SimpleTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +101,14 @@
 		003696AF1C8B7BA300465591 /* SwipeableTableViews */ = {
 			isa = PBXGroup;
 			children = (
+				003696E01C8B8B8F00465591 /* SimpleTableView.swift */,
 				003696B01C8B7BA300465591 /* AppDelegate.swift */,
 				003696B21C8B7BA300465591 /* ViewController.swift */,
 				003696B41C8B7BA300465591 /* Main.storyboard */,
 				003696B71C8B7BA300465591 /* Assets.xcassets */,
 				003696B91C8B7BA300465591 /* LaunchScreen.storyboard */,
 				003696BC1C8B7BA300465591 /* Info.plist */,
+				003696DE1C8B7BFD00465591 /* SwipeableTableViews.swift */,
 			);
 			path = SwipeableTableViews;
 			sourceTree = "<group>";
@@ -257,7 +263,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				003696B31C8B7BA300465591 /* ViewController.swift in Sources */,
+				003696E11C8B8B8F00465591 /* SimpleTableView.swift in Sources */,
 				003696B11C8B7BA300465591 /* AppDelegate.swift in Sources */,
+				003696DF1C8B7BFD00465591 /* SwipeableTableViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
